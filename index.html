@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Asset Tiger Bulk Printer</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <main>
+            <input type="file" accept=".csv" id="csvFileInput">
+            <button id="printButton">Print CSV</button>
+        </main>
+        
+        <script src="" async defer> 
+        
+        document.getElementById('printButton').addEventListener('click', function () {
+            const fileInput = document.getElementById('csvFileInput');
+            const file = fileInput.files[0];
+            
+            if (file) {
+                // Handle the CSV file here (e.g., parse and format data).
+                const csvData = parseCSV(file);
+
+                // Initiate the print action here (Ebra printer integration would go here).
+                printCSV(csvData);
+            } else {
+                alert('Please select a CSV file.');
+            }
+        });
+
+        function parseCSV(file) {
+            // Implement CSV parsing logic (e.g., using a library like PapaParse).
+            // Return the parsed data as needed.
+        }
+
+        function printCSV(data) {
+            // Implement the printing logic here.
+            // This is where you would handle Ebra printer integration.
+        }
+    </script>
+    </body>
