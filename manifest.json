@@ -1,0 +1,16 @@
+
+{
+    "name": "Zebra printer service",
+    "short_name": "TagPrinter",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#007bff",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}

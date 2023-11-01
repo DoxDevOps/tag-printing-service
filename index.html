@@ -24,7 +24,8 @@
         </main>
         
         <script src="" async defer> 
-        
+        let parsedData; // this is keep parsed data from papa Parse
+
         document.getElementById('printButton').addEventListener('click', function () {
             const fileInput = document.getElementById('csvFileInput');
             const file = fileInput.files[0];
@@ -41,18 +42,19 @@
         });
 
         function parseCSV(file) {
+
             Papa.parse(file, {
                 header:true,
                 dynamicTYping: true,
                 complete: function(results){
-                    const parsedData = results.data;
+                    parsedData = results.data;
                     console.log(parsedData);
                 }
             });
         }
 
         function printCSV(data) {
-             
+            // this will print data received from ParsedData
         }
     </script>
     </body>
