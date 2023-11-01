@@ -13,10 +13,6 @@
             font-size: 24px;
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
         label {
             display: block;
             width: 200px;
