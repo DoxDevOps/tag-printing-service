@@ -4,7 +4,10 @@ const assets = [
   "/index.html",
   "/css/style.css",
   "/js/app.js",
-  "/logo.png",
+  "/images/logo.png",
+  "/js/BrowserPrint-Zebra-1.1.250.min.js",
+  "/js/PapaParse-5.0.2/papaparse.min.js"
+
 ]
 
 self.addEventListener("install", installEvent => {
