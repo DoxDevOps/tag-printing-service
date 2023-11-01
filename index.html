@@ -43,7 +43,7 @@
         });
 
         function parseCSV(file) {
-
+            // Uing PAPA framework
             Papa.parse(file, {
                 header:true,
                 dynamicTYping: true,
@@ -54,8 +54,29 @@
             });
         }
 
-        function printCSV(data) {
+        function printCSV(dataToBePrinted) {
             // this will print data received from ParsedData
-        }
+            // we loop through the parsed data
+            dataToBePrinted.forEach(rowData => {
+                const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${rowData['Asset Tag ID']}^FS\n^XZ`;
+
+                // ******Structure of Code taken from ASSETBOX*********
+                BrowserPrint.getDefaultDevice("printer", function(device) {
+                    // Success callback function
+                    console.log("Attempting connection to printer");
+                    console.log(device);
+                    device.send(barcode_str, function(success) {
+                        // Inner success callback function
+                        console.log("Successfully sent job to the printer");
+                        }, function(error) {
+                            // Inner error callback function
+                            console.error("Error:" + error);
+                            });
+                            }, function(error) {
+                                // Outer error callback function
+                                console.log("Problems connecting to the printer");
+                                });
+
+                }); }
     </script>
     </body>
