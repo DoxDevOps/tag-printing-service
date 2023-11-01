@@ -1,4 +1,4 @@
-const staticDevCache = "dev-coffee-site-v1"
+const staticDevCache = "tag-printer-v1"
 const assets = [
   "/",
   "/index.html",
