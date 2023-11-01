@@ -11,6 +11,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <script src="PapaParse-5.0.2/papaparse.min.js"></script>
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -39,13 +41,18 @@
         });
 
         function parseCSV(file) {
-            // Implement CSV parsing logic (e.g., using a library like PapaParse).
-            // Return the parsed data as needed.
+            Papa.parse(file, {
+                header:true,
+                dynamicTYping: true,
+                complete: function(results){
+                    const parsedData = results.data;
+                    console.log(parsedData);
+                }
+            });
         }
 
         function printCSV(data) {
-            // Implement the printing logic here.
-            // This is where you would handle Ebra printer integration.
+             
         }
     </script>
     </body>
