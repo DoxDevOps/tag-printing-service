@@ -1,37 +1,31 @@
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-
-        main {
-            text-align: center;
-            margin: 100px auto;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        label {
-            display: block;
-            width: 200px;
-            height: 30px;
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-        }
-
-        #printButton {
-            display: block;
-            width: 200px;
-            height: 30px;
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-            line-height: 30px;
-            margin-top: 20px;
-            cursor: pointer;
-        }
+body {
+    font-family: "Poppins", sans-serif;
+    color: #0c0c0c;
+    background-color: #ffffff;
+    overflow-x: hidden;
+  }
+  
+  .hero_area {
+    padding-top: 10%;
+    min-height: 100vh;
+    position: relative;
+    background-color: #fff; /* Optional, set background color */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    
+  }
+  
+  
+  .btn,
+  .btn:focus {
+    outline: none !important;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+  

@@ -11,7 +11,16 @@
         <title>Asset Tiger Bulk Printer</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/style.css">
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+        <!-- fonts style -->
+        <link href="css/googlefont.css" rel="stylesheet" />
+         <!-- Custom styles for this template -->
+         <link href="css/style.css" rel="stylesheet" />
+        <!-- responsive style -->
+        <link href="css/responsive.css" rel="stylesheet" />
+
         <script src="js/PapaParse-5.0.2/papaparse.min.js"></script>
         <script src="js/BrowserPrint-Zebra-1.1.250.min.js"></script>
     </head>
@@ -20,10 +29,43 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <main>
-            <h1>UPLOAD AND PRINT BULK TAGS HERE </h1>
-            <label for="csvFileInput">Choose CSV File</label>
-            <input type="file" accept=".csv" id="csvFileInput" style="display: none;">
-            <button id="printButton">Print CSV</button>
+            <div class="hero_area" >    
+          
+                <div class="container ">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="detail-box">
+                        <h1>
+                          BAR CODE <br>
+                          PRINTING SERVICE
+                        </h1>
+                        <p>
+                          Upload first your csv file and then click print.
+                        </p>
+                        <div class="btn-box">
+                          <label for="csvFileInput">Choose CSV File</label>
+                          <input type="file" accept=".csv" id="csvFileInput">
+                
+                          
+                    
+                          <button  class = "btn btn-success", id="printButton">Print Tags</button>
+    
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="img-box">
+                        <img src="images/tag.jpg" alt="">
+                      </div>
+                    </div>
+                  
+           
+              </div>
+             
+          </div>
+        
+      </div>
+            
         </main>
         
         <script src="" async defer> 
@@ -48,6 +90,9 @@
             // Uing PAPA framework
             Papa.parse(file, {
                 header:true,
+                transformHeader: function(header) {
+        // Replace spaces with underscores
+        return header.replace(/ /g, '_');},
                 dynamicTYping: true,
                 complete: function(results){
                     parsedData = results.data;
@@ -60,7 +105,7 @@
             // this will print data received from ParsedData
             // we loop through the parsed data
             dataToBePrinted.forEach(rowData => {
-                const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${rowData['Asset Tag ID']}^FS\n^XZ`;
+                const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${rowData['Asset_Tag_ID']}^FS\n^XZ`;
 
                 // ******Structure of Code taken from ASSETBOX*********
                 BrowserPrint.getDefaultDevice("printer", function(device) {
