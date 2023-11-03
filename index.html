@@ -112,7 +112,7 @@
                     // Success callback function
                     console.log("Attempting connection to printer");
                     console.log(device);
-                    device.send(barcode_str, function(success) {
+                    device.send(zplBarCodeCommand, function(success) {
                         // Inner success callback function
                         console.log("Successfully sent job to the printer");
                         }, function(error) {
