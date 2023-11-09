@@ -22,13 +22,27 @@
         <link href="css/responsive.css" rel="stylesheet" />
 
         <script src="js/PapaParse-5.0.2/papaparse.min.js"></script>
-        <script src="js/BrowserPrint-Zebra-1.1.250.min.js"></script>
+        <script defer
+        type="text/javascript"  src="js/BrowserPrint-Zebra-1.1.250.min.js"></script>
+        <script defer
+              type="text/javascript"
+              src="js/BrowserPrint-3.1.250.min.js"></script>
+      
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <main>
+          <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img src="/images/barcode.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                Barcode Printer
+              </a>
+            </div>
+          </nav>
+
             <div class="hero_area" >    
           
                 <div class="container ">
@@ -48,7 +62,23 @@
                 
                           
                     
-                          <button  class = "btn btn-success", id="printButton">Print Tags</button>
+                          <button  class = "btn btn-success", id="printButton" onClick="parse_uploaded_csv()">Print Tags</button>
+    
+                        </div>
+                        <hr>
+                        <h1>
+                          OR
+                        </h1>
+                        <p>
+                          Print one Tag at a time  and then click print.
+                        </p>
+                        <div class="btn-box">
+                          <label for="textInput" class="form-label">Enter Text</label>
+                          <input type="text" class = "textinput form-control" id="textInput">
+                          <br>          
+                          
+                    
+                          <button  class = "btn btn-primary", id="printButton"   onClick="printSingleTag()">Print Tags</button>
     
                         </div>
                       </div>
@@ -68,62 +98,94 @@
             
         </main>
         
-        <script src="" async defer> 
-        let parsedData; // this is keep parsed data from papa Parse
+        <script> 
+        let parsedData; // This will keep parsed data from PapaParse
 
-        document.getElementById('printButton').addEventListener('click', function () {
-            const fileInput = document.getElementById('csvFileInput');
-            const file = fileInput.files[0];
-            
-            if (file) {
-                // Handle the CSV file here (e.g., parse and format data).
-                const csvData = parseCSV(file);
+        function printSingleTag()
+        {
+          const single_Tag_input =  document.getElementById("textInput");
+          const single_Tag = single_Tag_input.value;
+          if (single_Tag){
+            printCSV(single_Tag)
+          }
+          else{
+            alert("Please enter the Tag")
+          }
 
-                // Initiate the print action here (Ebra printer integration would go here).
-                printCSV(csvData);
-            } else {
-                alert('Please select a CSV file.');
-            }
-        });
-
-        function parseCSV(file) {
-            // Uing PAPA framework
-            Papa.parse(file, {
-                header:true,
-                transformHeader: function(header) {
-        // Replace spaces with underscores
-        return header.replace(/ /g, '_');},
-                dynamicTYping: true,
-                complete: function(results){
-                    parsedData = results.data;
-                    console.log(parsedData);
-                }
-            });
         }
 
+        function parse_uploaded_csv() 
+        {
+          const fileInput = document.getElementById('csvFileInput');
+          const file = fileInput.files[0];
+
+          if (file) {
+            // Handle the CSV file here (e.g., parse and format data).
+            parseCSV(file, function (csvData) 
+            {
+              console.log("Let's see", parsedData);
+
+              // Initiate the print action here (Zebra printer integration would go here).
+              // loop through and then send tag to be printed
+
+              dataToBePrinted.forEach(function(rowData, index) {
+              console.log("Item " + (index + 1) + ":");
+              console.log("Asset Tag ID: " + rowData.Asset_Tag_ID);
+    
+               const tagId = rowData.Asset_Tag_ID
+              
+                printCSV(tagId);
+                 });});
+           } 
+          else {alert('Please select a CSV file.');
+    }
+}
+
+      function parseCSV(file, callback) {
+    console.log("Now Parsing the uploaded CSV");
+
+    // Using Papa framework
+    Papa.parse(file, {
+        header: true,
+        transformHeader: function (header) {
+            // Replace spaces with underscores
+            return header.replace(/ /g, '_');
+        },
+        dynamicTyping: true,
+        complete: function (results) {
+            parsedData = results.data;
+            callback(parsedData); // Call the callback function with the parsed data
+        }
+    });
+}
+
         function printCSV(dataToBePrinted) {
-            // this will print data received from ParsedData
-            // we loop through the parsed data
-            dataToBePrinted.forEach(rowData => {
-                const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${rowData['Asset_Tag_ID']}^FS\n^XZ`;
+  // This will print data received from ParsedData
+  // Loop through the parsed data
+  console.log("Now Printing !");
+  console.log("this is what we have received for printing :"+dataToBePrinted);
+  
+    const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${dataToBePrinted}^FS\n^XZ`;
 
-                // ******Structure of Code taken from ASSETBOX*********
-                BrowserPrint.getDefaultDevice("printer", function(device) {
-                    // Success callback function
-                    console.log("Attempting connection to printer");
-                    console.log(device);
-                    device.send(zplBarCodeCommand, function(success) {
-                        // Inner success callback function
-                        console.log("Successfully sent job to the printer");
-                        }, function(error) {
-                            // Inner error callback function
-                            console.error("Error:" + error);
-                            });
-                            }, function(error) {
-                                // Outer error callback function
-                                console.log("Problems connecting to the printer");
-                                });
+    // Structure of Code taken from ASSETBOX
+    BrowserPrint.getDefaultDevice("printer", function(device) {
+      // Success callback function
+      console.log("Attempting connection to printer");
+      console.log(device);
 
-                }); }
+      device.send(zplBarCodeCommand, function(success) {
+        // Inner success callback function
+        console.log("Successfully sent job to the printer");
+      }, function(error) {
+        // Inner error callback function
+        console.error("Error:" + error);
+      });
+
+    }, function(error) {
+      // Outer error callback function
+      console.log("Problems connecting to the printer");
+    });
+  
+}
     </script>
     </body>
