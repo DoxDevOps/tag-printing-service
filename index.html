@@ -132,7 +132,7 @@
               // Initiate the print action here (Zebra printer integration would go here).
               // loop through and then send tag to be printed
 
-              dataToBePrinted.forEach(function(rowData, index) {
+              csvData.forEach(function(rowData, index) {
               console.log("Item " + (index + 1) + ":");
               console.log("Asset Tag ID: " + rowData.Asset_Tag_ID);
     
