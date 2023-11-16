@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Asset-Verification-Form</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <h1>Barcode Scanner</h1>
+  
+  <div id="result">
+    <h2>Scanned Barcode Information</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Barcode</th>
+          <th>Additional Info</th>
+        </tr>
+      </thead>
+      <tbody id="barcode-data-body"></tbody>
+    </table>
+  </div>
+
+  <form id="additional-info-form">
+    <label for="additionalInfo">Enter Additional Information:</label>
+    <input type="text" id="additionalInfo" name="additionalInfo" />
+    <button type="button" onclick="addAdditionalInfo()">Add Info</button>
+  </form>
+
+  <script>
+    const resultTableBody = document.getElementById('barcode-data-body');
+    const additionalInfoInput = document.getElementById('additionalInfo');
+
+    // Listen for input from the barcode scanner
+    document.addEventListener('keypress', function (event) {
+      // Check if the input is coming from the barcode scanner
+      if (event.keyCode === 13) {
+        // Assuming the Enter key (keyCode 13) is used by the scanner to submit data
+        const barcode = additionalInfoInput.value;
+        displayScannedBarcode(barcode);
+        additionalInfoInput.value = ''; // Clear the input field
+      }
+    });
+
+    function displayScannedBarcode(barcode) {
+      // Display the scanned barcode in the table
+      const row = resultTableBody.insertRow();
+      const cellBarcode = row.insertCell(0);
+      const cellAdditionalInfo = row.insertCell(1);
+
+      cellBarcode.innerHTML = barcode;
+      cellAdditionalInfo.innerHTML = '';
+    }
+
+    function addAdditionalInfo() {
+      const selectedRow = document.querySelector('#barcode-data-body tr:last-child');
+
+      if (selectedRow) {
+        const cellAdditionalInfo = selectedRow.cells[1];
+        cellAdditionalInfo.innerHTML = additionalInfoInput.value;
+      }
+    }
+  </script>
+</body>
+
+    </body>
+</html>
+ 
