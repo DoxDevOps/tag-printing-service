@@ -73,14 +73,37 @@
                         <p>
                           Print one Tag at a time  and then click print.
                         </p>
+                        
+                        
                         <div class="btn-box">
-                          <label for="textInput" class="form-label">Enter Text</label>
-                          <input type="text" class = "textinput form-control" id="textInput">
+                          <form>
+                          <label for="tagInput" class="form-label">Asset Tag ID :</label>
+                          <input type="text" class = "textinput form-control" id="tagInput" required>
+                          <label for="textInput" class="form-label">Description :</label>
+                          <input type="text" class = "textinput form-control" id="descriptionInput" required> 
+                          <label for="textInput" class="form-label">Purchased from :</label>
+                          <input type="text" class = "textinput form-control" id="PurchasedFromInput" required>
+                          <label for="textInput" class="form-label">Brand :</label>
+                          <input type="text" class = "textinput form-control" id="brandInput" required>
+                          <label for="textInput" class="form-label">Model :</label>
+                          <input type="text" class = "textinput form-control" id="modelInput" required>
+                          <label for="textInput" class="form-label">Serial No :</label>
+                          <input type="text" class = "textinput form-control" id="serialInput" required>
+                          <label for="textInput" class="form-label">Site</label>
+                          <input type="text" class = "textinput form-control" id="siteInput" required>
+                          <label for="textInput" class="form-label">Location</label>
+                          <input type="text" class = "textinput form-control" id="locationInput" required>
+                          <label for="textInput" class="form-label">Condition</label>
+                          <input type="text" class = "textinput form-control" id="conditionInput" required>
+                          <label for="textInput" class="form-label">Category</label>
+                          <input type="text" class = "textinput form-control" id="categoryInput" required>
+                          <label for="textInput" class="form-label">Status</label>
+                          <input type="text" class = "textinput form-control" id="statusInput" required>
                           <br>          
                           
                     
                           <button  class = "btn btn-primary", id="printButton"   onClick="printSingleTag()">Print Tags</button>
-    
+                            </form>
                         </div>
                       </div>
                     </div>
@@ -108,14 +131,42 @@
 
         function printSingleTag()
         {
-          const single_Tag_input =  document.getElementById("textInput");
-          const single_Tag = single_Tag_input.value;
-          if (single_Tag){
-            printCSV(single_Tag)
-          }
+          const tagInput =  document.getElementById("tagInput");
+          const descriptionInput =  document.getElementById("descriptionInput");
+          const PurchasedFromInput =  document.getElementById("PurchasedFromInput");
+          const brandInput =  document.getElementById("brandInput");
+          const modelInput =  document.getElementById("modelInput");
+          const serialInput =  document.getElementById("serialInput");
+          const siteInput =  document.getElementById("siteInput");
+          const locationInput =  document.getElementById("locationInput");
+          const conditionInput =  document.getElementById("conditionInput");
+          const categoryInput =  document.getElementById("categoryInput");
+          const statusInput =  document.getElementById("statusInput");
+
+          const tag = tagInput.value;
+          const description = descriptionInput.value;
+          const purchased = PurchasedFromInput.value;
+          const brand = brandInput.value;
+          const model = modelInput.value;
+          const serial = serialInput.value;
+          const site = siteInput.value;
+          const location = locationInput.value;
+          const condition = conditionInput.value;
+          const category = categoryInput.value;
+          const status = statusInput.value;
+
+          if (tag.trim() === '' && description.trim() === '' && purchased.trim() === '' 
+          && brand.trim() === '' && model.trim() === '' && serial.trim() === '' 
+          && site.trim() === '' && location.trim() === '' && condition.trim() === '' && category.trim() === '' && status.trim() === '' ) {
+              alert('Please fill out all required fields.');
+              return; // Stop further processing if a required field is empty
+            }
+
           else{
-            alert("Please enter the Tag")
+            tag = 
+            printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status)
           }
+          
 
         }
 
@@ -164,13 +215,16 @@
     });
 }
 
-        function printCSV(dataToBePrinted) {
-  // This will print data received from ParsedData
-  // Loop through the parsed data
-  console.log("Now Printing !");
-  console.log("this is what we have received for printing :"+dataToBePrinted);
-  
-    const zplBarCodeCommand = `^XA\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${dataToBePrinted}^FS\n^XZ`;
+        function printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status) {
+          // This will print data received from ParsedData
+          // Loop through the parsed data
+          console.log("Now Printing !");
+          console.log("this is what we have received for printing :"+dataToBePrinted);
+
+          const barcodeVariable = `${tag},${description},${purchased},${brand},${model},${serial},${site},${location},${condition},${category},${status}`;
+
+    const zplBarCodeCommand = `^XA\n^FO100,50^A0N,30,30^FH\^FDEGPAF MALAWI^FS\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${barcodeVariable}^FS\n^FT100,220^A0N,30,30^FH\^FDLocation: ${tag}^FS\n^XZ`;
+                            
 
     // Structure of Code taken from ASSETBOX
     BrowserPrint.getDefaultDevice("printer", function(device) {
