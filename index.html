@@ -256,11 +256,17 @@
           // This will print data received from ParsedData
           // Loop through the parsed data
           console.log("Now Printing !");
-          console.log("this is what we have received for printing :"+dataToBePrinted);
+          console.log("this is what we have received for printing :"+tag+description+purchased);
 
           const barcodeVariable = `${tag},${description},${purchased},${brand},${model},${serial},${site},${location},${condition},${category},${status}`;
 
-    const zplBarCodeCommand = `^XA\n^FO100,50^A0N,30,30^FH\^FDEGPAF MALAWI^FS\n^FO100,100^BY2\n^BCN,100,Y,N,N\n^FD${barcodeVariable}^FS\n^FT100,220^A0N,30,30^FH\^FDLocation: ${tag}^FS\n^XZ`;
+    const zplBarCodeCommand = `^XA
+^FO250,50^CF0,40^FD^FDMOH/EGPAF^FS
+^FO80,150^BY2
+^BCN,100,Y,N,N
+^FD${barcodeVariable}^FS
+^FT100,220^A0N,30,30^FH\^FDTag: ${tag}^FS
+^XZ`;
                             
 
     // Structure of Code taken from ASSETBOX
