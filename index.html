@@ -209,10 +209,25 @@
               csvData.forEach(function(rowData, index) {
               console.log("Item " + (index + 1) + ":");
               console.log("Asset Tag ID: " + rowData.Asset_Tag_ID);
-    
-               const tagId = rowData.Asset_Tag_ID
+              console.log("Asset Tag ID: " + rowData.Description);
+              console.log("Asset Tag ID: " + rowData.Purchased_from);
+              console.log("Asset Tag ID: " + rowData.Brand);
+              console.log("Asset Tag ID: " + rowData.Model);
               
-                printCSV(tagId);
+               const tag = rowData.Asset_Tag_ID
+               const description = rowData.Description
+               const purchased = rowData.Purchased_from
+               const brand = rowData.Brand
+               const model = rowData.Model
+               const serial = rowData.Serial_No
+               const site = rowData.Site
+               const location = rowData.Location
+               const condition = rowData.Condition
+               const category = rowData.Category
+               const status = rowData.Status
+              
+              
+                printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status)
                  });});
            } 
           else {alert('Please select a CSV file.');
