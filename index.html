@@ -122,13 +122,14 @@
         
       </div>
             
-        </main>
+        </main> 
+        
         <!-- footer section -->
   <footer class="footer_section">
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="#">DevOps</a>
+        <a href="#">DevOps-EGPAF</a>
         
       </p>
     </div>
@@ -188,8 +189,6 @@
             tag = 
             printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status)
           }
-          
-
         }
 
         function parse_uploaded_csv() 
@@ -252,7 +251,7 @@
     });
 }
 
-        function printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status) {
+function printCSV(tag, description, purchased, brand, model, serial, site, location, condition, category, status) {
           // This will print data received from ParsedData
           // Loop through the parsed data
           console.log("Now Printing !");
@@ -260,14 +259,13 @@
 
           const barcodeVariable = `${tag},${description},${purchased},${brand},${model},${serial},${site},${location},${condition},${category},${status}`;
 
-    const zplBarCodeCommand = ` ^XA
-^FO180,50^CF0,40^FD^FDMOH/EGPAF^FS
-^FO40,150^BY2
-^BCN,100,Y,N,N
+    const zplBarCodeCommand = `^XA
+^FO250,20^CF0,40^FD^FDEGPAF-MALAWI^FS
+^FO80,120^BY2^BCN,100,Y,N,N
 ^FD${barcodeVariable}^FS
-^FO50,220^A0N,30,30^FH\^FDTag:${tag}^FS
+^FO80,240^A0N,30,30^FH\^FD${tag}^FS
 ^XZ`;
-                            
+
 
     // Structure of Code taken from ASSETBOX
     BrowserPrint.getDefaultDevice("printer", function(device) {
